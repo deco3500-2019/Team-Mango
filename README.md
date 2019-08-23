@@ -11,3 +11,8 @@ link to wiki page here for proposal
 link to relevant links for prototype, promotional material & documentation
 
 <h2>Can you hear me?</h2>
+<ul>
+  <li>Test list 1</li>
+  <li>Test list 2</li>
+  <li>Test list 3</li>
+</ul>

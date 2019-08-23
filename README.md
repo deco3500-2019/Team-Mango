@@ -6,8 +6,8 @@ This is the space for team Optelsfone!!
 Placeholder
 <h2>link to wiki page here for proposal</h2>
 
-<h2>Link to Final Report</2>
+<h2>Link to Final Report</h2>
 https://github.com/deco3500-2019/TEMPLATE/wiki/Proposal
 
-Link to Working Prototype, Promotional Material, and Documentation
+<h2>Link to Working Prototype, Promotional Material, and Documentation</h2>
 link to relevant links for prototype, promotional material & documentation

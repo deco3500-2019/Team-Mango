@@ -3,11 +3,10 @@ This is the space for team Optelsfone!!
 <h1>Optelsfone</h1>
 
 <h2>Link To Project Proposal</h2>
-Placeholder
-<h2>link to wiki page here for proposal</h2>
+link to wiki page here for proposal
 
 <h2>Link to Final Report</h2>
-https://github.com/deco3500-2019/TEMPLATE/wiki/Proposal
+<em>Placeholder</em>
 
 <h2>Link to Working Prototype, Promotional Material, and Documentation</h2>
 link to relevant links for prototype, promotional material & documentation

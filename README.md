@@ -1,5 +1,5 @@
-# Team-Optelsfone
-This is the space for team Optelsfone!!
+# Team-Mango
+This is the space for team Mango!!
 
 <h2>Link To Project Proposal</h2>
 link to wiki page here for proposal

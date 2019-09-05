@@ -2,7 +2,7 @@
 This is the space for team Mango!!
 
 <h2>Link To Project Proposal</h2>
-<strong><a href="https://github.com/deco3500-2019/Team-Mango/wiki/Proposal">Proposal</a></strong>
+<h3><a href="https://github.com/deco3500-2019/Team-Mango/wiki/Proposal">Proposal</a></h3>
 
 <h2>Link to Final Report</h2>
 <em>Placeholder</em>

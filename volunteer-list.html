@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Volunteer Matching System</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Find your volunteers</h1>
+        <div>
+            <p id="org-name">Spain Co.</p>
+            <img src="images/profile.jpeg" alt="org-profile" id="org-profile" class="profile">
+        </div>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="">New Volunteers</a>
+        <a href="new-event.html">Create New</a>
+    </nav>
+
+    <section id="volunteer-visual">
+        <section>
+            <img src="images/circle.jpg" alt="" height="750">
+        </section>
+        <aside>
+            <h1 id="list-title">Event Name</h1>
+            <section class="volunteer-list-box">
+                <h2>Selected Volunteers</h2>
+                <section id="volunteer-list">
+                    <div class="volunteer-card">
+                        <img src="images/profile.jpeg" alt="" class="profile">
+                        <div>
+                            <h4>Hugo</h4>
+                            <p>Photographer</p>
+                        </div>
+                        <div>
+                            <p>X</p>
+                            <img src="images/view.svg" alt="chat" width="36" class="view-btn">
+                            <img src="images/message.svg" alt="menu" width="36" class="chat-btn" data-name="Hugo">
+                        </div>
+                    </div>
+                    <div class="volunteer-card">
+                            <img src="images/profile.jpeg" alt="" class="profile">
+                            <div>
+                                <h4>Jason</h4>
+                                <p>Photographer</p>
+                            </div>
+                            <div>
+                                <p>X</p>
+                                <img src="images/view.svg" alt="chat" width="36" class="view-btn">
+                                <img src="images/message.svg" alt="menu" width="36" class="chat-btn" data-name="Jason">
+                            </div>
+                        </div>
+                </section>
+            </section>
+            <section id="chat-box">
+                <nav>
+                    <h4 id="volunteer-name">Hugo</h4>
+                    <div>
+                        <p>-</p>
+                        <p id="close-box">x</p>
+                    </div>
+                </nav>
+                <section id="chat-area">
+                    <div class="other-side">
+                        <img src="images/profile.jpeg" alt="" class="profile">
+                        <p>Something</p>
+                    </div>
+                    <div class="my-side">
+                        <img src="images/profile.jpeg" alt="" class="profile">
+                        <p>Some Something</p>
+                    </div>
+                </section>
+                <section class="editing-box">
+                    <textarea name="type-content" id="type-content" cols="50" rows="4"></textarea>
+                </section>
+    
+            </section>
+        </aside>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/eventData.js"></script>
+    <script>
+        $("#chat-box").hide();
+        const url = window.location.href;
+        const eventId = url.split("=")[1];
+        const event = getEventDetail(eventId);
+
+        $("#list-title").text(event.title);
+
+        $("#close-box").click (function(){
+            $("#chat-box").hide();
+        });
+
+        $(".chat-btn").click(function() {
+            const name = $(this).attr("data-name");
+            $("#chat-box").show();
+            $("#volunteer-name").text(name);
+        })
+    </script>
+</body>

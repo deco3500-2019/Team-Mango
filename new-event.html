@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Volunteer Matching System - New event</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Edit Event</h1>
+        <div>
+            <p id="org-name">Spain Co.</p>
+            <img src="images/profile.jpeg" alt="org-profile" id="org-profile" class="profile">
+        </div>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="new-event.html">Create New</a>
+    </nav>
+    <form action="" id="new-event-form" method="GET">
+        <input type="text" name="event-id" id="event-id" style="display: none;">
+        <input type="text" name="event-title" id="event-title" placeholder="Event Name">
+        <div>
+            <div class="form-tag">
+                <label for="time-start">Date:</label>
+            </div>
+            <div class="form-input">
+                <input type="date" name="time-start" id="time-start">
+                <p>to</p>
+                <input type="date" name="time-end" id="time-end">
+            </div>
+        </div>
+        <div>
+            <div class="form-tag">
+                <label for="location">Location:</label>
+            </div>
+            <div class="form-input">
+                <input type="text" name="location" id="location">
+            </div>
+        </div>
+        <div>
+            <div class="form-tag">
+                <label for="tag">Tag:</label>
+            </div>
+            <div class="form-input">
+                <input type="text" name="tag" id="tag">
+            </div>
+        </div>
+        <div>
+            <div class="form-tag">
+                <label for="cover">Add cover picture(url):</label>
+            </div>
+            <div class="form-input">
+                <input type="text" name="cover" id="cover">
+            </div>
+        </div>
+        <div class="form-tag">
+            <label for="description">Description:</label>
+        </div>
+        <textarea name="description" id="description" cols="60" rows="10"></textarea>
+        <div>
+            <input type="submit" value="Submit" id="subBtn">
+        </div>
+    </form>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/eventData.js"></script>
+    <script>
+        checkLocalStorage();
+        const localEventData = JSON.parse(localStorage.getItem("eventData"));
+
+        const url = window.location.href;
+        const eventId = url.split("=")[1];
+
+        if (eventId != null) {
+            const event = getEventDetail(eventId);
+            $("#event-id").val(event.id);
+            $("#event-title").val(event.title);
+            $("#location").val(event.location);
+            $("#time-start").val(event.timeStart);
+            $("#time-end").val(event.timeEnd);
+            $("#tag").val(event.tag.toString());
+            $("#cover").val(event.cover);
+            $("#description").val(event.description);
+        }
+
+        $("#subBtn").click(function (e) {
+            e.preventDefault();
+            const eventId = $("#event-id").val();
+            const title = $("#event-title").val();
+            const location = $("#location").val();
+            const timeStart = $("#time-start").val();
+            const timeEnd = $("#time-end").val();
+            const tag = $("#tag").val().split(",");
+            let cover = $("#cover").val();
+            if (cover == "") {
+                cover = "images/profile.jpeg";
+            }
+            const description = $("#description").val();
+            const owner = $("#org-name").text();
+
+            if (eventId == "") {
+                createNewEvent(title, location, timeStart, timeEnd, cover, tag, description, owner,
+                    localEventData);
+            } else {
+                console.log(eventId);
+                updateEvent(eventId, title, location, timeStart, timeEnd, cover, tag, description, owner,
+                    localEventData);
+            }
+            window.location.href = "index.html";
+        })
+    </script>
+</body>
+
+</html>

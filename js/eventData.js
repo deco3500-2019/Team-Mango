@@ -36,12 +36,14 @@ const eventData = [{
 
 const volunteerData = [
     {
-        voluntterId:"1",
+        volunteerId:"1",
         signedEvent:"1570760203456",
         name:"Hugo Christie",
         gender:"Male",
         location:"Brisbane, Queensland",
-        instruction: "in this area, user needs to introduce himself or herself, maybe 50-150 words? oh, I forget the number they mentioned before."+
+        profile:"images/profile.jpeg",
+        job:"Photographer",
+        introduction: "in this area, user needs to introduce himself or herself, maybe 50-150 words? oh, I forget the number they mentioned before."+
         " In this  sketch, maybe 8-10 words a line. So, now  there has been 35 words. Let me type more to meet 50 words. ok, I will repeat these sentences."+
         "in this area, user needs to introduce himself or herself, maybe 50-150 words? oh, I forget the number they mentioned before. In this  sketch,"+
         " maybe 8-10 words a line. So, now  there has been 35 words. Let me type more to meet 50 words. ok, I will repeat these sentences."+
@@ -51,12 +53,14 @@ const volunteerData = [
         interest: ["Photography", "Young care"],
     },
     {
-        voluntterId:"2",
+        volunteerId:"2",
         signedEvent:"1570760203456",
-        name:"Hugo Christie",
+        name:"Wade Giles",
         gender:"Male",
         location:"Brisbane, Queensland",
-        instruction: "in this area, user needs to introduce himself or herself, maybe 50-150 words? oh, I forget the number they mentioned before."+
+        profile:"images/profile.jpeg",
+        job:"Photographer",
+        introduction: "in this area, user needs to introduce himself or herself, maybe 50-150 words? oh, I forget the number they mentioned before."+
         " In this  sketch, maybe 8-10 words a line. So, now  there has been 35 words. Let me type more to meet 50 words. ok, I will repeat these sentences."+
         "in this area, user needs to introduce himself or herself, maybe 50-150 words? oh, I forget the number they mentioned before. In this  sketch,"+
         " maybe 8-10 words a line. So, now  there has been 35 words. Let me type more to meet 50 words. ok, I will repeat these sentences."+
@@ -72,10 +76,13 @@ const checkLocalStorage = () => {
     if (!localStorage.getItem("eventData")) {
         localStorage.setItem("eventData", JSON.stringify(eventData));
     }
+    if(!localStorage.getItem("volunteerData")) {
+        localStorage.setItem("volunteerData", JSON.stringify(volunteerData));
+    }
 };
 
 const createNewEvent = (title, location, timeStart, timeEnd, cover, tag, description, owner, localEventData) => {
-    localEventData.push({
+    localEventData.unshift({
         location: location,
         timeStart: timeStart,
         timeEnd: timeEnd,
@@ -114,6 +121,15 @@ function getEventDetail(eventId) {
     for (let i = 0; i < localEventData.length; i++) {
         if (localEventData[i].id == eventId) {
             return localEventData[i];
+        }
+    }
+}
+
+function getVolunteerDetail(vid) {
+    const localVolunteerData = JSON.parse(localStorage.getItem("volunteerData"));
+    for(let i=0; i<localVolunteerData.length; i++) {
+        if(localVolunteerData[i].volunteerId==vid){
+            return localVolunteerData[i];
         }
     }
 }

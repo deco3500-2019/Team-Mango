@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -11,20 +11,72 @@
 
 <body>
     <header>
-        <h1>Events</h1>
-        <input type="text" name="event" id="event-input" placeholder="🔍">
+        <h1>Volunteer Details</h1>
         <div>
             <p id="org-name">Spain Co.</p>
-            <img src="images/profile.jpeg" alt="org-profile" id="org-profile">
+            <img src="images/profile.jpeg" alt="org-profile" id="org-profile" class="profile">
         </div>
     </header>
     <nav>
         <a href="index.html">Home</a>
-        <a href="">New Volunteers</a>
         <a href="new-event.html">Create New</a>
-
     </nav>
+    <section>
+        <section class="vol-banner">
+            <img src="images/profile.jpeg" alt="" id="vol-profile" class="large-profile">
+            <div>
+                <h1 id="vol-name">
+                    Hugo Cristine
+                </h1>
+                <div>
+                    <p id="vol-gender">Gender: Male</p>
+                    <p id="vol-location">Location: Brisbane</p>
+                </div>
+            </div>
+        </section>
+        <section class="vol-info">
+            <h1>Introduction</h1>
+            <p id="vol-intro">
+                some...
+            </p>
+        </section>
+        <section class="vol-info">
+            <h1>Skills</h1>
+            <ul id="vol-skill">
+
+            </ul>
+        </section>
+        <section class="vol-info">
+            <h1>Interest</h1>
+            <ul id="vol-interest">
+
+            </ul>
+        </section>
+    </section>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/eventData.js"></script>
+    <script>
+        const url = window.location.href;
+        const vid = url.split("=")[1];
+        const volunteer = getVolunteerDetail(vid);
+
+        $("#vol-name").text(volunteer.name);
+
+        $("#vol-intro").text(volunteer.introduction);
+        const skillUl = document.getElementById("vol-skill");
+        volunteer.skills.forEach(skill => {
+            const skillList = document.createElement("li");
+            skillList.innerHTML = skill;
+            skillUl.append(skillList);
+        });
+
+        const interestUl = document.getElementById("vol-interest");
+        volunteer.interest.forEach(item => {
+            const interestLi = document.createElement("li")
+            interestLi.innerHTML = item;
+            interestUl.append(interestLi);
+        });
+    </script>
 
 </body>

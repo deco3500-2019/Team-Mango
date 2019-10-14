@@ -19,7 +19,6 @@
     </header>
     <nav>
         <a href="index.html">Home</a>
-        <a href="">New Volunteers</a>
         <a href="new-event.html">Create New</a>
     </nav>
 
@@ -32,30 +31,7 @@
             <section class="volunteer-list-box">
                 <h2>Selected Volunteers</h2>
                 <section id="volunteer-list">
-                    <div class="volunteer-card">
-                        <img src="images/profile.jpeg" alt="" class="profile">
-                        <div>
-                            <h4>Hugo</h4>
-                            <p>Photographer</p>
-                        </div>
-                        <div>
-                            <p>X</p>
-                            <img src="images/view.svg" alt="chat" width="36" class="view-btn">
-                            <img src="images/message.svg" alt="menu" width="36" class="chat-btn" data-name="Hugo">
-                        </div>
-                    </div>
-                    <div class="volunteer-card">
-                            <img src="images/profile.jpeg" alt="" class="profile">
-                            <div>
-                                <h4>Jason</h4>
-                                <p>Photographer</p>
-                            </div>
-                            <div>
-                                <p>X</p>
-                                <img src="images/view.svg" alt="chat" width="36" class="view-btn">
-                                <img src="images/message.svg" alt="menu" width="36" class="chat-btn" data-name="Jason">
-                            </div>
-                        </div>
+
                 </section>
             </section>
             <section id="chat-box">
@@ -79,7 +55,7 @@
                 <section class="editing-box">
                     <textarea name="type-content" id="type-content" cols="50" rows="4"></textarea>
                 </section>
-    
+
             </section>
         </aside>
     </section>
@@ -92,16 +68,78 @@
         const eventId = url.split("=")[1];
         const event = getEventDetail(eventId);
 
+        const volList = [];
+        const localVolunteerData = JSON.parse(localStorage.getItem("volunteerData"));
+        localVolunteerData.forEach(vol => {
+            console.log(vol.signedEvent);
+            if (vol.signedEvent == eventId) {
+                volList.push(vol);
+                const cardDiv = createVolCard(vol);
+                const volListSec = document.getElementById("volunteer-list");
+                volListSec.append(cardDiv);
+            }
+        });
+
         $("#list-title").text(event.title);
 
-        $("#close-box").click (function(){
+        $("#close-box").click(function () {
             $("#chat-box").hide();
         });
 
-        $(".chat-btn").click(function() {
+        $(".view-btn").click(function () {
+            window.location.href = `volunteer-detail.html?vid=${$(this).attr("data-id")}`;
+        });
+
+        $(".chat-btn").click(function () {
             const name = $(this).attr("data-name");
             $("#chat-box").show();
             $("#volunteer-name").text(name);
-        })
+        });
+
+        function createVolCard(vol) {
+
+            /*
+             <div class="volunteer-card">
+                    <img src="images/profile.jpeg" alt="" class="profile">
+                    <div>
+                        <h4>Hugo</h4>
+                        <p>Photographer</p>
+                    </div>
+                    <div>
+                        <p>X</p>
+                        <img src="images/view.svg" alt="chat" width="36" class="view-btn" data-id="1">
+                        <img src="images/message.svg" alt="menu" width="36" class="chat-btn" data-name="Hugo">
+                    </div>
+                </div>
+            */
+            const cardDiv = document.createElement("div");
+            cardDiv.className = "volunteer-card";
+            const profile = document.createElement("img");
+            profile.setAttribute("src", vol.profile);
+            profile.className = "profile";
+            const infoDiv = document.createElement("div");
+            const name = document.createElement("h4");
+            name.innerHTML = vol.name;
+            const job = document.createElement("p");
+            job.innerHTML = vol.job;
+            infoDiv.append(name, job);
+            const menuDiv = document.createElement("div");
+            const xmark = document.createElement("p");
+            xmark.innerHTML = "X";
+            const viewBtn = document.createElement("img");
+            viewBtn.setAttribute("src", "images/view.svg");
+            viewBtn.setAttribute("width", "36");
+            viewBtn.setAttribute("data-id", vol.volunteerId);
+            viewBtn.className = "view-btn";
+            const chatBtn = document.createElement("img");
+            chatBtn.setAttribute("src", "images/message.svg");
+            chatBtn.setAttribute("width", "36");
+            chatBtn.setAttribute("data-name", vol.name);
+            chatBtn.className = "chat-btn";
+            menuDiv.append(xmark, viewBtn, chatBtn);
+            cardDiv.append(profile, infoDiv, menuDiv);
+            return cardDiv;
+
+        }
     </script>
 </body>

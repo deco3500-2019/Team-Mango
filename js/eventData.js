@@ -1,5 +1,5 @@
 const eventData = [{
-        location: "Queen St",
+        location: "Queen Street",
         timeStart: "2019-10-01T13:00",
         timeEnd: "2019-10-01T15:00",
         title: "Spainish Culture",
@@ -14,7 +14,7 @@ const eventData = [{
         location: "Toowong",
         timeStart: "2019-10-12T08:00",
         timeEnd: "2019-10-12T11:00",
-        title: "Chines Culture",
+        title: "Chinese Culture",
         description: null,
         requiredJob:["Back-up"],
         cover: "images/profile.jpeg",
@@ -40,7 +40,7 @@ const eventData = [{
 const volunteerData = [
     {
         volunteerId:"1",
-        name:"Hugo Christie",
+        name:"Hugo Christie (Selected)",
         gender:"Male",
         location:"Brisbane, Queensland",
         email:"v123@vol.com",
@@ -71,22 +71,46 @@ const volunteerData = [
         "In this sketch, maybe 8-10 words a line. So, now  there has been 35 words. Let me type more to meet 50 words. ok, I will repeat these sentences.",
         skills: ["Drawing", "Photograph"],
         interest: ["Photography", "Young care"],
-    }
+    },
+    {
+        volunteerId:"3",
+        name:"Hugo Christie",
+        gender:"Male",
+        location:"Brisbane, Queensland",
+        email:"v123@vol.com",
+        tel: "1234555",
+        profile:"images/vol-profile.JPG",
+        introduction: "in this area, user needs to introduce himself or herself, maybe 50-150 words? oh, I forget the number they mentioned before."+
+        " In this  sketch, maybe 8-10 words a line. So, now  there has been 35 words. Let me type more to meet 50 words. ok, I will repeat these sentences."+
+        "in this area, user needs to introduce himself or herself, maybe 50-150 words? oh, I forget the number they mentioned before. In this  sketch,"+
+        " maybe 8-10 words a line. So, now  there has been 35 words. Let me type more to meet 50 words. ok, I will repeat these sentences."+
+        "in this area, user needs to introduce himself or herself, maybe 50-150 words? oh, I forget the number they mentioned before. "+
+        "In this sketch, maybe 8-10 words a line. So, now  there has been 35 words. Let me type more to meet 50 words. ok, I will repeat these sentences.",
+        skills: ["Drawing", "Photograph"],
+        interest: ["Photography", "Young care"],
+    },
 ];
 
 const matchReco = [
-    {
-        volunteerId:"1",
-        signedEvent:"1570760203456",
-        signedJob:"Photographer",
-        type:1,
-    },
     {
         volunteerId:"2",
         signedEvent:"1570760203456",
         signedJob:"Photographer",
         type: 1,
-    }
+    },
+    {
+        volunteerId:"3",
+        signedEvent:"1570760203456",
+        signedJob:"Back-up",
+        type: 1,
+    },
+    {
+        volunteerId:"1",
+        signedEvent:"1570760203456",
+        signedJob:"Photographer",
+        type: 2,
+    },
+    
 ];
 
 

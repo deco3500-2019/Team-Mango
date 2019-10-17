@@ -29,6 +29,12 @@
 
     </nav>
     <section>
+        <h1>My Up-coming Event</h1>
+        <div id="my-event-list" class="event-list">
+
+        </div>
+    </section>
+    <section>
         <h1>Today's Recommondation</h1>
         <div id="event-list" class="event-list">
 
@@ -44,33 +50,95 @@
 
         const localEventData = JSON.parse(localStorage.getItem("eventData"));
         const eventList = document.getElementById("event-list");
+        const localMatchReco = JSON.parse(localStorage.getItem("matchReco"));
 
-        localEventData.forEach(event => {
-                
-                if (Math.random() > 0.5) {
-                    console.log("true");
-                    const link = document.createElement("a");
-                    const eventSec = document.createElement("section");
-                    eventSec.setAttribute("data-link", event.id);
-                    const coverDiv = document.createElement("div");
+        const volInfo = getVolunteerDetail(1);
+        $("#vol-name").text(volInfo.name);
+        $("#vol-profile").attr("src", volInfo.profile);
 
-                    const eventCover = document.createElement("img");
-                    eventCover.setAttribute("src", event.cover);
-                    coverDiv.append(eventCover);
+        const filter = {
+            type: -1,
+            volId: 1,
+        };
+        searchEvent(filter);
 
-                    coverDiv.className = "cover-div";
-                    const eventTitle = document.createElement("h3");
-                    eventTitle.innerHTML = event.title;
-                    const orgName = document.createElement("p");
-                    orgName.innerHTML = `Organisation: ${event.owner}`;
-                    const eventPlace = document.createElement("p");
-                    eventPlace.innerHTML = `Location: ${event.location}`;
-                    const eventTime = document.createElement("p");
-                    eventTime.innerHTML = event.timeStart;
-                    eventSec.append(coverDiv, eventTitle, orgName, eventPlace, eventTime);
-                    eventSec.className = "event-sec clickable";
-                    eventList.append(eventSec);
+
+        function searchEvent(filter) {
+            const myEventList = document.getElementById("my-event-list");
+            const upComingEvent = []
+            if (eventList.hasChildNodes()) {
+                while (eventList.childNodes.length >= 1) {
+                    eventList.removeChild(eventList.firstChild);
+                }
+            }
+
+            localMatchReco.forEach(reco => {
+                if (reco.volunteerId == filter.volId) {
+                    const event = getEventDetail(reco.signedEvent);
+                    if (filter.type == reco.type || filter.type == -1) {
+                        upComingEvent.push(event);
+                    }
                 }
             });
+            const maxRange = upComingEvent.length > 3? 3:upComingEvent.length;
+            for (let i = 0; i < maxRange; i++) {
+                const event = upComingEvent[i];
+                const link = document.createElement("a");
+                const eventSec = document.createElement("section");
+                eventSec.setAttribute("data-link", event.id);
+                const coverDiv = document.createElement("div");
+
+                const eventCover = document.createElement("img");
+                eventCover.setAttribute("src", event.cover);
+                coverDiv.append(eventCover);
+
+                coverDiv.className = "cover-div";
+                const eventTitle = document.createElement("h3");
+                eventTitle.innerHTML = event.title;
+                const orgName = document.createElement("p");
+                orgName.innerHTML = `Organisation: ${event.owner}`;
+                const eventPlace = document.createElement("p");
+                eventPlace.innerHTML = `Location: ${event.location}`;
+                const eventTime = document.createElement("p");
+                eventTime.innerHTML = event.timeStart;
+                eventSec.append(coverDiv, eventTitle, orgName, eventPlace, eventTime);
+                eventSec.className = "event-sec clickable";
+                myEventList.append(eventSec);
+            }
+
+            if (!myEventList.hasChildNodes()) {
+                const noMatch = document.createElement("h3");
+                noMatch.innerHTML = "You have no up-coming event";
+                eventList.append(noMatch);
+            }
+        }
+
+        localEventData.forEach(event => {
+
+            if (Math.random() > 0.5) {
+                console.log("true");
+                const link = document.createElement("a");
+                const eventSec = document.createElement("section");
+                eventSec.setAttribute("data-link", event.id);
+                const coverDiv = document.createElement("div");
+
+                const eventCover = document.createElement("img");
+                eventCover.setAttribute("src", event.cover);
+                coverDiv.append(eventCover);
+
+                coverDiv.className = "cover-div";
+                const eventTitle = document.createElement("h3");
+                eventTitle.innerHTML = event.title;
+                const orgName = document.createElement("p");
+                orgName.innerHTML = `Organisation: ${event.owner}`;
+                const eventPlace = document.createElement("p");
+                eventPlace.innerHTML = `Location: ${event.location}`;
+                const eventTime = document.createElement("p");
+                eventTime.innerHTML = event.timeStart;
+                eventSec.append(coverDiv, eventTitle, orgName, eventPlace, eventTime);
+                eventSec.className = "event-sec clickable";
+                eventList.append(eventSec);
+            }
+        });
     </script>
 </body>

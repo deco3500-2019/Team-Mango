@@ -116,7 +116,7 @@ nav a:hover {
     background-color: white;
     border: 1px solid rgba(0,0,0,0.3);
     height: 70%;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 .vol-list-sec {
@@ -258,12 +258,12 @@ nav a:hover {
     margin: 2% 1%;
     padding: 3%;
     box-shadow: 1px 1px 3px 2px rgba(0,0,0,0.3);
-    /* width: 40%; */
+    width: 100%;
 }
 
-#popup-close-btn {
+.boardless-btn {
     border:none;
-    background-color: white;
+    background:none;
     font-size: 2em;
     margin: 2%;
 }
@@ -380,4 +380,13 @@ nav a:hover {
     font-size: 1.5em;
     margin: 1% 0;
     border-radius: 20px;
+}
+
+.two-column{
+    width: 46%;
+    margin: 2%;
+}
+
+.two-column:first-child{
+    border-right: 1px solid black;
 }

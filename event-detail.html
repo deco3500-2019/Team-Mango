@@ -63,6 +63,7 @@
         </div>
     </section>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/eventData.js"></script>
     <script>
         const url = window.location.href;
         const eventId = url.split("=")[1];
@@ -72,10 +73,14 @@
         for (let i = 0; i < localMatchReco.length; i++) {
             if (localMatchReco[i].volunteerId == volId && eventId == localMatchReco[i].signedEvent) {
                 $("#sub-btn").text("Unregister");
-                $("#sub-btn").attr("data-type", i);
+                $("#sub-btn").attr("data-num", i);
             }
         }
         createInfo(event);
+
+        const volInfo = getVolunteerDetail(1);
+        $("#vol-name").text(volInfo.name);
+        $("#vol-profile").attr("src",volInfo.profile);
 
         function getEventDetail(eventId) {
             const localEventData = JSON.parse(localStorage.getItem("eventData"));
@@ -109,8 +114,9 @@
                 $(this).text("Sign up for event");
                 const recoId = parseInt($(this).attr("data-num"));
                 localMatchReco.splice(recoId, 1);
+                $(this).attr("data-num","");
             } else {
-                $("#sub-btn").text("Unregister");
+                $(this).text("Unregister");
                 const job = $("#req-job-sec").val();
                 localMatchReco.push({
                     volunteerId: volId,
@@ -119,6 +125,7 @@
                     type: 1,
                 });
                 $(this).attr("data-num", localMatchReco.length - 1);
+
             }
             localStorage.setItem("matchReco", JSON.stringify(localMatchReco));
         });

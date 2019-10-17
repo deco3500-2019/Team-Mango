@@ -54,6 +54,10 @@
         const localEventData = JSON.parse(localStorage.getItem("eventData"));
         const localMatchReco = JSON.parse(localStorage.getItem("matchReco"));
         const volId = $("#vol-name").attr("data-id");
+        
+        const volInfo = getVolunteerDetail(1);
+        $("#vol-name").text(volInfo.name);
+        $("#vol-profile").attr("src",volInfo.profile);
 
         const events = [
             /*

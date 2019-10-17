@@ -31,12 +31,27 @@
         </section>
     </section>
     <section id="popup-window">
-        <button id="popup-close-btn">X</button>
-        <section class="btn-sec" id="popup-btn-sec">
+        <button id="popup-close-btn" class="boardless-btn">X</button>
+        <h1 id="popup-title">Signed up volunteer for event</h1>
+        <section>
+            <h1 style="text-align: center;">Choose the job you need</h1>
+            <section class="btn-sec" id="popup-btn-sec">
 
+            </section>
         </section>
-        <section id="popup-vol-sec" class="vol-list-sec">
+        <section style="display: flex; flex-direction: row;">
+            <section class="two-column">
+                <h1>Signed Volunteers</h1>
+                <section id="popup-vol-sec" class="vol-list-sec">
 
+                </section>
+            </section>
+            <section class="two-column">
+                <h1>Selected Volunteers</h1>
+                <section id="popup-selected-sec" class="vol-list-sec">
+
+                </section>
+            </section>
         </section>
     </section>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -101,45 +116,81 @@
 
         function renderPopupWindow(eventID, localMatchReco, localVolunteerData) {
             const event = getEventDetail(eventID);
+            $("#popup-title").text(`Signed up volunteer for event: ${event.title}`);
+            $("#popup-title").attr("style", "text-align: center;")
             const btnSec = document.getElementById("popup-btn-sec");
             if (btnSec.hasChildNodes()) {
                 while (btnSec.childNodes.length >= 1) {
                     btnSec.removeChild(btnSec.firstChild);
                 }
             }
+
+            const allbtn = document.createElement("button");
+            allbtn.setAttribute("value", "all");
+            allbtn.innerHTML = "All";
+            allbtn.className = "filter-btn";
+            allbtn.setAttribute("data-eventid", eventID);
+            btnSec.append(allbtn);
             event.requiredJob.forEach(job => {
                 const btn = document.createElement("button");
                 btn.setAttribute("value", job);
                 btn.innerHTML = job;
-                btn.className = "filter-btn";
+                btn.className = "filter-btn deactivate";
+                btn.setAttribute("data-eventid", eventID);
                 btnSec.append(btn);
             });
-        
-            renderVolSec(eventID, localMatchReco ,localVolunteerData);
+            const signedSec = document.getElementById("popup-vol-sec");
+            const selectedSec = document.getElementById("popup-selected-sec");
 
-
+            renderVolSec({
+                    eventID:eventID,
+                    job:"all",
+                    type: 1,
+                },
+                localMatchReco,
+                localVolunteerData,
+                signedSec,
+            );
+            renderVolSec({
+                    eventID:eventID,
+                    job:"all",
+                    type: 2,
+                },
+                localMatchReco,
+                localVolunteerData,
+                selectedSec,
+            );
         }
 
-        function renderVolSec(eventID, localMatchReco, localVolunteerData) {
-            const volSec = document.getElementById("popup-vol-sec");
+        function renderVolSec(filter, localMatchReco, localVolunteerData, volSec) {
+            if (volSec.hasChildNodes()) {
+                while (volSec.childNodes.length >= 1) {
+                    volSec.removeChild(volSec.firstChild);
+                }
+            }
             const volList = [];
             localMatchReco.forEach(reco => {
-                if (reco.signedEvent == eventID) {
+                if (reco.signedEvent == filter.eventID) {
                     localVolunteerData.forEach(vol => {
-                        if (reco.volunteerId == vol.volunteerId) {
-                            volList.push({vol:vol, job:reco.signedJob});
+                        if (reco.volunteerId == vol.volunteerId && reco.type == filter.type) {
+                            if (filter.job == "all" || filter.job == reco.signedJob) {
+                                volList.push({
+                                    vol: vol,
+                                    job: reco.signedJob
+                                });
+                            }
                         }
                     });
                 }
             });
             volList.forEach(item => {
-                const card = createVolCard(item.vol, item.job);
+                const card = createVolCard(item.vol, filter,item.job);
                 volSec.append(card);
             });
 
         }
 
-        function createVolCard(vol, job) {
+        function createVolCard(vol, filter, job) {
 
             /*
              <div class="volunteer-card">
@@ -167,19 +218,27 @@
             jobSec.innerHTML = job;
             infoDiv.append(name, jobSec);
             const menuDiv = document.createElement("div");
-            const xmark = document.createElement("p");
-            xmark.innerHTML = "X";
+            const plusmark = document.createElement("button");
+            if(filter.type == 1) {
+                plusmark.innerHTML = "+";
+            }
+            else {
+                plusmark.innerHTML = "-";
+            }
+            plusmark.className = "boardless-btn plus-mark";
+            plusmark.setAttribute("data-volID",vol.volunteerId);
+            plusmark.setAttribute("data-eventID",filter.eventID);
             const viewBtn = document.createElement("img");
             viewBtn.setAttribute("src", "images/view.svg");
             viewBtn.setAttribute("width", "36");
             viewBtn.setAttribute("data-id", vol.volunteerId);
             viewBtn.className = "view-btn";
-            const chatBtn = document.createElement("img");
-            chatBtn.setAttribute("src", "images/message.svg");
-            chatBtn.setAttribute("width", "36");
-            chatBtn.setAttribute("data-id", vol.volunteerId);
-            chatBtn.className = "chat-btn";
-            menuDiv.append(xmark, viewBtn, chatBtn);
+            // const chatBtn = document.createElement("img");
+            // chatBtn.setAttribute("src", "images/message.svg");
+            // chatBtn.setAttribute("width", "36");
+            // chatBtn.setAttribute("data-id", vol.volunteerId);
+            // chatBtn.className = "chat-btn";
+            menuDiv.append(plusmark, viewBtn);
             cardDiv.append(profile, infoDiv, menuDiv);
             return cardDiv;
 
@@ -190,10 +249,10 @@
         });
 
         $(".humanIcon").click(function () {
-            window.location.href = `volunteer-list.html?id=${$(this).attr("data-link")}`;
-            // const eventID = $(this).attr("data-link");
-            // $("#popup-window").show();
-            // renderPopupWindow(eventID, localMatchReco, localVolunteerData);
+            //window.location.href = `volunteer-list.html?id=${$(this).attr("data-link")}`;
+            const eventID = $(this).attr("data-link");
+            $("#popup-window").show();
+            renderPopupWindow(eventID, localMatchReco, localVolunteerData);
         })
 
         $(".editIcon").click(function () {
@@ -214,8 +273,68 @@
             }
         });
 
-        $("#popup-close-btn").click(function() {
+        $("#popup-close-btn").click(function () {
             $("#popup-window").hide();
+        });
+
+        $("#popup-window").on("click", ".filter-btn", function () {
+            const job = $(this).val();
+            const eventID = $(this).attr("data-eventid");
+            $(".filter-btn").attr("class", "filter-btn deactivate");
+            $(this).attr("class", "filter-btn");
+            const signedSec = document.getElementById("popup-vol-sec");
+            const selectedSec = document.getElementById("popup-selected-sec");
+            renderVolSec({
+                    eventID:eventID,
+                    job:job,
+                    type: 1,
+                },
+                localMatchReco,
+                localVolunteerData,
+                signedSec,
+            );
+            renderVolSec({
+                    eventID:eventID,
+                    job:"all",
+                    type: 2,
+                },
+                localMatchReco,
+                localVolunteerData,
+                selectedSec,
+            );
+        });
+
+        $("#popup-window").on("click", ".plus-mark", function () {
+            const volID = $(this).attr("data-volID");
+            const eventID = $(this).attr("data-eventID");
+            localMatchReco.forEach(reco => {
+                if(reco.volunteerId == volID && reco.signedEvent == eventID) {
+                    reco.type = reco.type==2? 1: 2;
+                }
+            });
+            localStorage.setItem("matchReco",JSON.stringify(localMatchReco));
+            const signedSec = document.getElementById("popup-vol-sec");
+            const selectedSec = document.getElementById("popup-selected-sec");
+            const job = $(".filter-btn:not(.deactivate)").val();
+            renderVolSec({
+                    eventID:eventID,
+                    job:job,
+                    type: 1,
+                },
+                localMatchReco,
+                localVolunteerData,
+                signedSec,
+            );
+            renderVolSec({
+                    eventID:eventID,
+                    job:"all",
+                    type: 2,
+                },
+                localMatchReco,
+                localVolunteerData,
+                selectedSec,
+            );
+
         });
     </script>
 </body>

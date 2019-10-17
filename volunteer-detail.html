@@ -18,7 +18,7 @@
         </div>
     </header>
     <nav>
-        <a href="index.html">Home</a>
+        <a href="index-org.html">Home</a>
         <a href="new-event.html">Create New</a>
     </nav>
     <section>
@@ -52,6 +52,7 @@
 
             </ul>
         </section>
+
     </section>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -60,8 +61,10 @@
         const url = window.location.href;
         const vid = url.split("=")[1];
         const volunteer = getVolunteerDetail(vid);
-
+        $("#vol-profile").attr("src",volunteer.profile);
         $("#vol-name").text(volunteer.name);
+        $("#vol-gender").text(`Gender: ${volunteer.gender}`);
+        $("#location").text(`Location: ${volunteer.location}`);
 
         $("#vol-intro").text(volunteer.introduction);
         const skillUl = document.getElementById("vol-skill");

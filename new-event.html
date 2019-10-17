@@ -15,23 +15,24 @@
         <div>
             <p id="org-name">Spain Co.</p>
             <img src="images/profile.jpeg" alt="org-profile" id="org-profile" class="profile">
+            <a href="index.html" class="link-btn">Switch to Volunteer</a>
         </div>
     </header>
     <nav>
-        <a href="index.html">Home</a>
+        <a href="index-org.html">Home</a>
         <a href="new-event.html">Create New</a>
     </nav>
     <form action="" id="new-event-form" method="GET">
         <input type="text" name="event-id" id="event-id" style="display: none;">
-        <input type="text" name="event-title" id="event-title" placeholder="Event Name">
+        <input type="text" name="event-title" id="event-title" placeholder="Input Event Name">
         <div>
             <div class="form-tag">
                 <label for="time-start">Date:</label>
             </div>
             <div class="form-input">
-                <input type="date" name="time-start" id="time-start">
+                <input type="datetime-local" name="time-start" id="time-start">
                 <p>to</p>
-                <input type="date" name="time-end" id="time-end">
+                <input type="datetime-local" name="time-end" id="time-end">
             </div>
         </div>
         <div>
@@ -47,7 +48,35 @@
                 <label for="tag">Tag:</label>
             </div>
             <div class="form-input">
-                <input type="text" name="tag" id="tag">
+                <div>
+                    <input type="checkbox" name="pol" val="pol" class="tag-check">
+                    <label for="pol">Politics</label>
+                </div>
+
+                <div>
+                    <input type="checkbox" name="eco" val="eco" class="tag-check">
+                    <label for="eco">Economic</label>
+                </div>
+                <div>
+                    <input type="checkbox" name="env" val="env" class="tag-check">
+                    <label for="env">Environment</label>
+                </div>
+                <div>
+                    <input type="checkbox" name="cul" val="cul" class="tag-check">
+                    <label for="cul">Cultural</label>
+                </div>
+                <div>
+                    <input type="checkbox" name="tec" val="tec" class="tag-check">
+                    <label for="tec">Technology</label>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="form-tag">
+                <label for="location">Required Jobs(Separete with comma):</label>
+            </div>
+            <div class="form-input">
+                <input type="text" name="required-job" id="required-job">
             </div>
         </div>
         <div>
@@ -82,7 +111,14 @@
             $("#location").val(event.location);
             $("#time-start").val(event.timeStart);
             $("#time-end").val(event.timeEnd);
-            $("#tag").val(event.tag.toString());
+            $("#required-job").val(event.requiredJob.toString());
+            $("input").each(function() {
+                event.tag.forEach(tag => {
+                    if($(this).attr("name") == tag) {
+                        $(this).prop('checked', true);
+                    }
+                });
+            });
             $("#cover").val(event.cover);
             $("#description").val(event.description);
         }
@@ -94,7 +130,14 @@
             const location = $("#location").val();
             const timeStart = $("#time-start").val();
             const timeEnd = $("#time-end").val();
-            const tag = $("#tag").val().split(",");
+            const requiredJob = $("#required-job").val().split(",");
+            const tag = [];
+            $("input:checked").each(function() {
+                const val = $(this).attr("name");
+                tag.push(val);
+            });
+
+            console.log(tag);
             let cover = $("#cover").val();
             if (cover == "") {
                 cover = "images/profile.jpeg";
@@ -103,14 +146,14 @@
             const owner = $("#org-name").text();
 
             if (eventId == "") {
-                createNewEvent(title, location, timeStart, timeEnd, cover, tag, description, owner,
+                createNewEvent(title, location, timeStart, timeEnd, requiredJob, cover, tag, description, owner,
                     localEventData);
             } else {
                 console.log(eventId);
-                updateEvent(eventId, title, location, timeStart, timeEnd, cover, tag, description, owner,
+                updateEvent(eventId, title, location, timeStart, timeEnd,requiredJob,  cover, tag, description, owner,
                     localEventData);
             }
-            window.location.href = "index.html";
+            window.location.href = "index-org.html";
         })
     </script>
 </body>

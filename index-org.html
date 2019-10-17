@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Volunteer Matching System</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Events</h1>
+        <input type="text" name="event" id="event-input" placeholder="🔍">
+        <div>
+            <p id="org-name">Spain Co.</p>
+            <img src="images/profile.jpeg" alt="org-profile" id="org-profile" class="profile">
+            <a href="index.html" class="link-btn">Switch to Volunteer</a>
+        </div>
+    </header>
+    <nav>
+        <a href="index-org.html">Home</a>
+        <a href="new-event.html">Create New</a>
+
+    </nav>
+    <section id="event-list" class="event-list">
+        <section class="new-event" id="new-event">
+            <p class="plus-mark">+</p>
+            <p>creat event</p>
+        </section>
+    </section>
+    <section id="popup-window">
+        <button id="popup-close-btn">X</button>
+        <section class="btn-sec" id="popup-btn-sec">
+
+        </section>
+        <section id="popup-vol-sec" class="vol-list-sec">
+
+        </section>
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/eventData.js"></script>
+    <script>
+        checkLocalStorage();
+        const eventList = document.getElementById("event-list");
+        const orgName = document.getElementById("org-name").innerHTML;
+        const localEventData = JSON.parse(localStorage.getItem("eventData"));
+        const localVolunteerData = JSON.parse(localStorage.getItem("volunteerData"));
+        const localMatchReco = JSON.parse(localStorage.getItem("matchReco"));
+
+        $("#popup-window").hide();
+
+        localEventData.forEach(event => {
+            if (orgName == event.owner) {
+                console.log("true");
+                const eventSec = document.createElement("section");
+                const coverDiv = document.createElement("div");
+                const eventCover = document.createElement("img");
+                eventCover.setAttribute("src", event.cover);
+                coverDiv.append(eventCover);
+
+                const iconDiv = document.createElement("div");
+
+                const humanIcon = document.createElement("img");
+                humanIcon.setAttribute("src", "images/human.svg");
+                humanIcon.setAttribute("width", "36px");
+                humanIcon.setAttribute("height", "36px");
+                humanIcon.setAttribute("data-link", event.id);
+                humanIcon.className = "humanIcon";
+
+                const editIcon = document.createElement("img");
+                editIcon.setAttribute("src", "images/cog.svg");
+                editIcon.setAttribute("data-link", event.id);
+                editIcon.setAttribute("width", "36px");
+                editIcon.setAttribute("height", "36px");
+                editIcon.className = "editIcon";
+
+                const deletIcon = document.createElement("img");
+                deletIcon.setAttribute("src", "images/bin.svg");
+                deletIcon.setAttribute("data-link", event.id);
+                deletIcon.setAttribute("width", "36px");
+                deletIcon.setAttribute("height", "36px");
+                deletIcon.className = "deletIcon";
+
+                iconDiv.append(humanIcon, editIcon, deletIcon);
+                iconDiv.className = "icon-div";
+                coverDiv.append(iconDiv);
+                coverDiv.className = "cover-div";
+                const eventTitle = document.createElement("h3");
+                eventTitle.innerHTML = event.title;
+                const eventPlace = document.createElement("p");
+                eventPlace.innerHTML = event.location;
+                const eventTime = document.createElement("p");
+                eventTime.innerHTML = event.timeStart;
+                eventSec.append(coverDiv, eventTitle, eventPlace, eventTime);
+                eventSec.className = "event-sec";
+                eventList.append(eventSec);
+            }
+        });
+
+        function renderPopupWindow(eventID, localMatchReco, localVolunteerData) {
+            const event = getEventDetail(eventID);
+            const btnSec = document.getElementById("popup-btn-sec");
+            if (btnSec.hasChildNodes()) {
+                while (btnSec.childNodes.length >= 1) {
+                    btnSec.removeChild(btnSec.firstChild);
+                }
+            }
+            event.requiredJob.forEach(job => {
+                const btn = document.createElement("button");
+                btn.setAttribute("value", job);
+                btn.innerHTML = job;
+                btn.className = "filter-btn";
+                btnSec.append(btn);
+            });
+        
+            renderVolSec(eventID, localMatchReco ,localVolunteerData);
+
+
+        }
+
+        function renderVolSec(eventID, localMatchReco, localVolunteerData) {
+            const volSec = document.getElementById("popup-vol-sec");
+            const volList = [];
+            localMatchReco.forEach(reco => {
+                if (reco.signedEvent == eventID) {
+                    localVolunteerData.forEach(vol => {
+                        if (reco.volunteerId == vol.volunteerId) {
+                            volList.push({vol:vol, job:reco.signedJob});
+                        }
+                    });
+                }
+            });
+            volList.forEach(item => {
+                const card = createVolCard(item.vol, item.job);
+                volSec.append(card);
+            });
+
+        }
+
+        function createVolCard(vol, job) {
+
+            /*
+             <div class="volunteer-card">
+                    <img src="images/profile.jpeg" alt="" class="profile">
+                    <div>
+                        <h4>Hugo</h4>
+                        <p>Photographer</p>
+                    </div>
+                    <div>
+                        <p>X</p>
+                        <img src="images/view.svg" alt="chat" width="36" class="view-btn" data-id="1">
+                        <img src="images/message.svg" alt="menu" width="36" class="chat-btn" data-name="Hugo">
+                    </div>
+                </div>
+            */
+            const cardDiv = document.createElement("div");
+            cardDiv.className = "volunteer-card";
+            const profile = document.createElement("img");
+            profile.setAttribute("src", vol.profile);
+            profile.className = "profile";
+            const infoDiv = document.createElement("div");
+            const name = document.createElement("h4");
+            name.innerHTML = vol.name;
+            const jobSec = document.createElement("p");
+            jobSec.innerHTML = job;
+            infoDiv.append(name, jobSec);
+            const menuDiv = document.createElement("div");
+            const xmark = document.createElement("p");
+            xmark.innerHTML = "X";
+            const viewBtn = document.createElement("img");
+            viewBtn.setAttribute("src", "images/view.svg");
+            viewBtn.setAttribute("width", "36");
+            viewBtn.setAttribute("data-id", vol.volunteerId);
+            viewBtn.className = "view-btn";
+            const chatBtn = document.createElement("img");
+            chatBtn.setAttribute("src", "images/message.svg");
+            chatBtn.setAttribute("width", "36");
+            chatBtn.setAttribute("data-id", vol.volunteerId);
+            chatBtn.className = "chat-btn";
+            menuDiv.append(xmark, viewBtn, chatBtn);
+            cardDiv.append(profile, infoDiv, menuDiv);
+            return cardDiv;
+
+        }
+
+        $("#new-event").click(function () {
+            window.location.href = 'new-event.html';
+        });
+
+        $(".humanIcon").click(function () {
+            window.location.href = `volunteer-list.html?id=${$(this).attr("data-link")}`;
+            // const eventID = $(this).attr("data-link");
+            // $("#popup-window").show();
+            // renderPopupWindow(eventID, localMatchReco, localVolunteerData);
+        })
+
+        $(".editIcon").click(function () {
+            window.location.href = `new-event.html?id=${$(this).attr("data-link")}`;
+        });
+
+        $(".deletIcon").click(function () {
+            if (confirm("Do you really want to delet it?")) {
+                const id = $(this).attr("data-link");
+                for (let i = 0; i < localEventData.length; i++) {
+                    if (localEventData[i].id == id) {
+                        localEventData.splice(i, 1);
+                        console.log(localEventData);
+                        localStorage.setItem("eventData", JSON.stringify(localEventData));
+                        window.location.reload();
+                    }
+                }
+            }
+        });
+
+        $("#popup-close-btn").click(function() {
+            $("#popup-window").hide();
+        });
+    </script>
+</body>
+
+</html>

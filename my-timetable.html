@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Volunteer Matching System</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!--Full Calender referenced from https://fullcalendar.io based on MIT license-->
+    <link href='fullcalendar/core/main.css' rel='stylesheet'>
+    <link href='fullcalendar/daygrid/main.css' rel='stylesheet'>
+    <link rel="stylesheet" href="fullcalendar/timegrid/main.css">
+    <!--End of reference-->
+</head>
+
+<body>
+    <header>
+        <h1>Home</h1>
+        <input type="text" name="event" id="event-input" placeholder="🔍">
+        <div>
+            <p id="vol-name" data-id="1">Vol</p>
+            <a href="vol-profile.html">
+                <img src="images/profile.jpeg" alt="vol-profile" id="vol-profile" class="profile">
+            </a>
+            <a href="index-org.html" class="link-btn">Switch to Organiser</a>
+        </div>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="find-event.html">Find Event</a>
+        <a href="my-event.html">My Event</a>
+        <a href="my-timetable.html">Time Table</a>
+
+    </nav>
+    <section class="main-sec">
+        <div id='calendar'></div>
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/eventData.js"></script>
+
+    <!--Full Calender referenced from https://fullcalendar.io based on MIT license-->
+    <!--Full Calender Schedual referenced from https://fullcalendar.io/docs/premium based on CC license-->
+    <script src='fullcalendar/core/main.js'></script>
+    <script src='fullcalendar/daygrid/main.js'></script>
+    <script src="fullcalendar/interaction/main.js"></script>
+    <script src="fullcalendar/list/main.js"></script>
+    <script src="fullcalendar/timegrid/main.js"></script>
+    <!--End of reference-->
+
+    <script>
+
+        checkLocalStorage();
+        const localEventData = JSON.parse(localStorage.getItem("eventData"));
+        const localMatchReco = JSON.parse(localStorage.getItem("matchReco"));
+        const volId = $("#vol-name").attr("data-id");
+
+        const events = [
+            /*
+            {
+                title:
+                start:
+                end:
+            }
+            */
+
+        ];
+
+        const filter = {
+            type: -1,
+            volId: volId,
+        };
+        searchEvent(filter);
+
+
+        function searchEvent(filter) {
+
+            localMatchReco.forEach(reco => {
+                if (reco.volunteerId == filter.volId) {
+
+                    const event = getEventDetail(reco.signedEvent);
+                    const eventTimetable = {
+                        title: event.title,
+                        start: event.timeStart,
+                        end:event.timeEnd,
+                    }
+                    events.push(eventTimetable);
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                plugins: ['interaction', 'dayGrid', 'timeGrid'],
+                events: events,
+            });
+
+            // calendar.on('dateClick', function (info) {
+            //     console.log('clicked on ' + info.dateStr);
+            // });
+
+            calendar.render();
+        });
+    </script>
+</body>

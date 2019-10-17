@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Volunteer Matching System</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Home</h1>
+        <input type="text" name="event" id="event-input" placeholder="🔍">
+        <div>
+            <p id="name" data-id="1">Vol</p>
+            <a href="vol-profile.html">
+                <img src="images/profile.jpeg" alt="vol-profile" id="vol-profile" class="profile">
+            </a>
+            <a href="index-org.html" class="link-btn">Switch to Organiser</a>
+        </div>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="find-event.html">Find Event</a>
+        <a href="my-event.html">My Event</a>
+        <a href="my-timetable.html">Time Table</a>
+
+    </nav>
+    <section class="vol-banner">
+        <div>
+            <img src="images/profile.jpeg" alt="" id="vol-profile-large" class="large-profile">
+            <div class="form-input">
+                <label for="profile-url">Profile(url):</label>
+                <input type="text" name="profile-url" id="profile-url">
+            </div>
+        </div>
+        <form action="">
+            <input type="text" id="vid" value="1" disabled style="display: none;">
+            <div class="form-row">
+                <div class="form-tag">
+                    <label for="">Name: </label>
+                </div>
+                <div class="form-input">
+                    <input type="text" id="vol-name">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-tag">
+                    <label for="gender">Gender:</label>
+                </div>
+                <div class="form-input">
+                    <input type="text" id="vol-gender">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-tag">
+                    <label for="email">E-mail: </label>
+                </div>
+                <div class="form-input">
+                    <input type="text" name="email" id="vol-email">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-tag">
+                    <label for="tel">Phone: </label>
+                </div>
+                <div class="form-input">
+                    <input type="text" name="tel" id="vol-tel">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-tag">
+                    <label for="location">Location: </label>
+                </div>
+                <div class="form-input">
+                    <input type="text" name="location" id="location">
+                </div>
+            </div>
+        </form>
+    </section>
+    <section class="vol-info">
+        <h1>Self introduction</h1>
+        <textarea name="intro" id="vol-intro" cols="120" rows="10"></textarea>
+    </section>
+    <section class="vol-info">
+        <h1>Skills</h1>
+        <p>Please input below, seperate with comma</p>
+        <textarea name="intro" id="vol-skill" cols="60" rows="5"></textarea>
+    </section>
+    <section class="vol-info">
+        <h1>Interests</h1>
+        <p>Please input below, seperate with comma</p>
+        <textarea name="intro" id="vol-interest" cols="60" rows="5"></textarea>
+    </section>
+    <section class="vol-info">
+        <button id="sub-btn">Save</button>
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/eventData.js"></script>
+    <script>
+        const vid = "1";
+        const volunteer = getVolunteerDetail(vid);
+        $("#vol-profile").attr("src", volunteer.profile);
+        $("#vol-profile-large").attr("src", volunteer.profile);
+        $("#profile-url").val(volunteer.profile);
+        $("#vol-name").val(volunteer.name);
+        $("#vol-gender").val(volunteer.gender);
+        $("#vol-email").val(volunteer.email);
+        $("#vol-tel").val(volunteer.tel);
+        $("#location").val(volunteer.location);
+        $("#vol-intro").val(volunteer.introduction);
+
+        $("#vol-skill").val(volunteer.skills.toString());
+        $("#vol-interest").val(volunteer.interest.toString());
+
+        $("#profile-url").change(function() {
+            $("#vol-profile-large").attr("src", $(this).val());
+        });
+
+        $("#sub-btn").click(function () {
+            volunteer.name = $("#vol-name").val();
+            volunteer.profile =  $("#profile-url").val();
+            
+            volunteer.gender = $("#vol-gender").val();
+            volunteer.email = $("#vol-email").val();
+            volunteer.tel = $("#vol-tel").val();
+            volunteer.location = $("#location").val();
+            volunteer.introduction = $("#vol-intro").val();
+
+            volunteer.skills = $("#vol-skill").val().split(",");
+            volunteer.interest = $("#vol-interest").val().split(",");
+
+            const localVolunteerData = JSON.parse(localStorage.getItem("volunteerData"));
+            updateVolunteer(volunteer, localVolunteerData);
+            alert("Profile Updated!");
+            window.location.reload();
+        });
+    </script>

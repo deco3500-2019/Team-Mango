@@ -15,10 +15,11 @@
         <div>
             <p id="org-name">Spain Co.</p>
             <img src="images/profile.jpeg" alt="org-profile" id="org-profile" class="profile">
+            <a href="index.html" class="link-btn">Switch to Volunteer</a>
         </div>
     </header>
     <nav>
-        <a href="index.html">Home</a>
+        <a href="index-org.html">Home</a>
         <a href="new-event.html">Create New</a>
     </nav>
 
@@ -54,6 +55,7 @@
                 </section>
                 <section class="editing-box">
                     <textarea name="type-content" id="type-content" cols="50" rows="4"></textarea>
+                    <button id="send-btn">Send</button>
                 </section>
 
             </section>
@@ -70,11 +72,17 @@
 
         const volList = [];
         const localVolunteerData = JSON.parse(localStorage.getItem("volunteerData"));
-        localVolunteerData.forEach(vol => {
-            console.log(vol.signedEvent);
-            if (vol.signedEvent == eventId) {
-                volList.push(vol);
-                const cardDiv = createVolCard(vol);
+        const localMatchReco = JSON.parse(localStorage.getItem("matchReco"));
+
+        localMatchReco.forEach(reco => {
+            if (reco.signedEvent == eventId) {
+                const vol = getVolunteerDetail(reco.volunteerId)
+                volList.push({
+                    volunteer:vol,
+                    job: reco.signedJob,
+                });
+                console.log(volList);
+                const cardDiv = createVolCard(vol, reco.signedJob);
                 const volListSec = document.getElementById("volunteer-list");
                 volListSec.append(cardDiv);
             }
@@ -88,15 +96,64 @@
 
         $(".view-btn").click(function () {
             window.location.href = `volunteer-detail.html?vid=${$(this).attr("data-id")}`;
+            /*
+            const section = document.getElementById("volunteer-visual");
+            const volunteerDetail = document.createElement("iframe");
+            volunteerDetail.setAttribute("src", `volunteer-detail.html?vid=${$(this).attr("data-id")}`);
+            volunteerDetail.className = ".vol-detail-frame";
+            section.append(volunteerDetail);
+            */
+
         });
 
         $(".chat-btn").click(function () {
-            const name = $(this).attr("data-name");
+            const vid = $(this).attr("data-id");
+            const vol = getVolunteerDetail(vid)
+            
             $("#chat-box").show();
-            $("#volunteer-name").text(name);
+            $("#volunteer-name").text(vol.name);
+            const chatArea = document.getElementById("chat-area");
+            if (chatArea.hasChildNodes()) {
+                while (chatArea.childNodes.length >= 1) {
+                    chatArea.removeChild(chatArea.firstChild);
+                }
+            }
+            const helloMsg = createMsg(vol.profile, "other-side", "Hello, nice to meet you");
+            chatArea.append(helloMsg);
         });
 
-        function createVolCard(vol) {
+        $("#send-btn").click(function () {
+            /*
+            <div class="other-side">
+                <img src="images/profile.jpeg" alt="" class="profile">
+                <p>Something</p>
+            </div>
+            <div class="my-side">
+                <img src="images/profile.jpeg" alt="" class="profile">
+                <p>Some Something</p>
+            </div>
+            */
+            const msg = $("#type-content").val();
+            $("#type-content").val("");
+            const orgProfile = $("#org-profile").attr("src");
+            const msgCard = createMsg(orgProfile, "my-side", msg);
+            const chatArea = document.getElementById("chat-area");
+            chatArea.append(msgCard);
+        });
+
+        function createMsg(porfile,side,msg) {
+            const helloMsg = document.createElement("div");
+            helloMsg.className = side;
+            const chatPorfile = document.createElement("img");
+            chatPorfile.setAttribute("src",porfile);
+            chatPorfile.className = "profile";
+            const msgP = document.createElement("p");
+            msgP.innerHTML = msg;
+            helloMsg.append(chatPorfile,msgP);
+            return helloMsg;
+        }
+
+        function createVolCard(vol, job) {
 
             /*
              <div class="volunteer-card">
@@ -120,9 +177,9 @@
             const infoDiv = document.createElement("div");
             const name = document.createElement("h4");
             name.innerHTML = vol.name;
-            const job = document.createElement("p");
-            job.innerHTML = vol.job;
-            infoDiv.append(name, job);
+            const jobSec = document.createElement("p");
+            jobSec.innerHTML = job;
+            infoDiv.append(name, jobSec);
             const menuDiv = document.createElement("div");
             const xmark = document.createElement("p");
             xmark.innerHTML = "X";
@@ -134,7 +191,7 @@
             const chatBtn = document.createElement("img");
             chatBtn.setAttribute("src", "images/message.svg");
             chatBtn.setAttribute("width", "36");
-            chatBtn.setAttribute("data-name", vol.name);
+            chatBtn.setAttribute("data-id", vol.volunteerId);
             chatBtn.className = "chat-btn";
             menuDiv.append(xmark, viewBtn, chatBtn);
             cardDiv.append(profile, infoDiv, menuDiv);

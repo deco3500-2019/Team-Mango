@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Volunteer Matching System</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Home</h1>
+        <input type="text" name="event" id="event-input" placeholder="🔍">
+        <div>
+            <p id="vol-name" data-id="1">Vol</p>
+            <a href="vol-profile.html">
+                <img src="images/profile.jpeg" alt="vol-profile" id="vol-profile" class="profile">
+            </a>
+            <a href="index-org.html" class="link-btn">Switch to Organiser</a>
+        </div>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="find-event.html">Find Event</a>
+        <a href="my-event.html">My Event</a>
+        <a href="my-timetable.html">Time Table</a>
+    </nav>
+    <section id="event-filter">
+        <div>
+            <h1>Find by location</h1>
+            <input type="text" name="" id="location" placeholder="Input location">
+            <button id="search-btn">Search</button>
+        </div>
+        <div>
+            <h1>Find by theme</h1>
+            <div class="btn-sec">
+                <button class="filter-btn" value="pol" name="pol">Politics</button>
+                <button class="filter-btn" value="eco" name="eco">Economic</button>
+                <button class="filter-btn" value="env" name="env">Environment</button>
+                <button class="filter-btn" value="cul" name="cul">Cultural</button>
+                <button class="filter-btn" value="tec" name="tec">Technology</button>
+            </div>
+        </div>
+    </section>
+    <section id="event-list" class="event-list">
+
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/eventData.js"></script>
+    <script>
+        checkLocalStorage();
+
+        const filter = {
+            location: null,
+            tag: null,
+        }
+        const localEventData = JSON.parse(localStorage.getItem("eventData"));
+
+        searchEvent(filter);
+
+        $("#search-btn").click(function () {
+            filter.location = $("#location").val();
+            searchEvent(filter);
+        })
+
+        $(".filter-btn").click(function () {
+            if (filter.tag == $(this).val()) {
+                filter.tag = null;
+                $(".filter-btn").attr("class", "filter-btn");
+                searchEvent(filter);
+            } else {
+                $(".filter-btn").attr("class", "filter-btn deactivate");
+                $(this).attr("class", "filter-btn");
+                filter.tag = $(this).val();
+                searchEvent(filter);
+            }
+        });
+
+        $("#event-list").on("click", ".event-sec", function () {
+            window.location.href = `event-detail.html?id=${$(this).attr("data-link")}`
+        });
+
+        function searchEvent(filter) {
+            const eventList = document.getElementById("event-list");
+            if (eventList.hasChildNodes()) {
+                while (eventList.childNodes.length >= 1) {
+                    eventList.removeChild(eventList.firstChild);
+                }
+            }
+
+            localEventData.forEach(event => {
+                let locationMatch = false;
+                let tagMatch = false;
+                if (!filter.location) {
+                    locationMatch = true;
+                } else if (event.location.toLocaleLowerCase().includes(filter.location.toLocaleLowerCase())) {
+                    locationMatch = true;
+                }
+
+                if (!filter.tag) {
+                    tagMatch = true;
+                } else {
+                    event.tag.forEach(tag => {
+                        if (tag == filter.tag) {
+                            tagMatch = true;
+                        }
+                    });
+                }
+
+
+                if (locationMatch && tagMatch) {
+                    console.log("true");
+                    const link = document.createElement("a");
+                    const eventSec = document.createElement("section");
+                    eventSec.setAttribute("data-link", event.id);
+                    const coverDiv = document.createElement("div");
+
+                    const eventCover = document.createElement("img");
+                    eventCover.setAttribute("src", event.cover);
+                    coverDiv.append(eventCover);
+
+                    coverDiv.className = "cover-div";
+                    const eventTitle = document.createElement("h3");
+                    eventTitle.innerHTML = event.title;
+                    const orgName = document.createElement("p");
+                    orgName.innerHTML = `Organisation: ${event.owner}`;
+                    const eventPlace = document.createElement("p");
+                    eventPlace.innerHTML = `Location: ${event.location}`;
+                    const eventTime = document.createElement("p");
+                    eventTime.innerHTML = event.timeStart;
+                    eventSec.append(coverDiv, eventTitle, orgName, eventPlace, eventTime);
+                    eventSec.className = "event-sec clickable";
+                    eventList.append(eventSec);
+                }
+            });
+
+            if (!eventList.hasChildNodes()) {
+                const noMatch = document.createElement("h3");
+                noMatch.innerHTML = "No event Match, please try other condition";
+                eventList.append(noMatch);
+            }
+        }
+    </script>
+</body>

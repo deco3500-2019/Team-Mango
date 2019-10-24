@@ -30,4 +30,59 @@ The high-fidelity prototype of this project is a pure front-end simulation websi
 
 Working in progress...
 
+# Project Contributions
+
+## Nick
+* Team leader & UX Designer
+* Research on volunteering system
+* Create Interview questions
+* Interview with volunteers and organizations
+* Making Poster
+* Usability testing for the prototype
+* Participate in stand-up discussion
+* Contribute to the Readme.md
+* Contribute to Wiki page
+
+## Wally
+* Web developer
+* Research on communication method
+* Interview with Volunteers and organization
+* Volunteering Website (Front end) 
+* Participate in stand-up discussion
+* Contribute to the Readme.md
+* Contribute to Wiki page
+
+## John
+* Web developer 
+* Product website development
+* Building a medium fidelity prototype
+* Research on volunteers motivation
+* Research on the ecosystem of Australia volunteering service
+* Interview with volunteers and organizations
+* Usability testing for the prototype
+* Participate in stand-up discussion
+* Contribute to the Readme.md
+* Contribute to Wiki page
+
+## Jan
+* UX designer
+* Building a low fidelity prototype
+* Research on volunteering system
+* Research on the ecosystem of Australia volunteering service
+* Interview with volunteers and organizations
+* Usability testing for the prototype
+* Participate in stand-up discussion
+* Contribute to the Readme.md
+* Contribute to Wiki page
+
+## QS
+* UX designer
+* Sketching for the prototype
+* Research on the relationship between organization and volunteers
+* Research on the use of technology in volunteering
+* Participate in both interview and observation 
+* Usability testing for the prototype
+* Participate in stand-up discussion
+* Contribute to the Readme.md
+* Contribute to Wiki page
 

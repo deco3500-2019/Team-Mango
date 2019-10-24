@@ -22,11 +22,11 @@ The high-fidelity prototype of this project is a pure front-end simulation websi
 
 4. The signed volunteers and events are created automatically when first initialised using data from js/eventData.js and store into local storage. Users may change the preset event and volunteer information by changing the object in js/eventData.js Users can reset the project by deleting the local storage data.
 
-## Link To Project Proposal
+# Link To Project Proposal
 
 ### [Proposal](https://github.com/deco3500-2019/Team-Mango/wiki/Proposal)
 
-## Link to Final Report
+# Link to Final Report
 
 Working in progress...
 

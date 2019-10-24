@@ -46,6 +46,11 @@
         $("#event-list").on("click", ".event-sec", function () {
             window.location.href = `event-detail.html?id=${$(this).attr("data-link")}`
         });
+
+        $("#my-event-list").on("click", ".event-sec", function () {
+            window.location.href = `event-detail.html?id=${$(this).attr("data-link")}`
+        });
+
         checkLocalStorage();
 
         const localEventData = JSON.parse(localStorage.getItem("eventData"));

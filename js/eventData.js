@@ -24,9 +24,9 @@ const eventData = [{
         id: "1570760202249"
     },
     {
-        Location: "Indooroopilly",
-        timesStart: "2019-11-09 T 14:00",
-        timeEnd: "2019-11-09 T 20:00",
+        location: "Indooroopilly",
+        timesStart: "2019-11-09T14:00",
+        timeEnd: "2019-11-09T20:00",
         title: "Specialty Coffee Festival",
         cover: "images/john.jpg",
         description: "Do you enjoy making coffee? Do you enjoy meeting people? We have invited several famous Baristas to provide a high-quality and enchanting taste feast. Additionally, there are also desserts, cakes, drinks, pizza, snack and board games. As a volunteer, you can not only show your coffee making skills but also acquire relevant knowledge from top Baristas in Brisbane. Furthermore, you can capture people’s joy by your camera, or guide people to understand the rules of the game. And don’t forget to get a cup of free coffee with your volunteer ID :).",

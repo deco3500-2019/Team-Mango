@@ -31,7 +31,8 @@
     <section id="main">
         <div class="vol-info">
             <h1 id="event-title"></h1>
-            <p id="tag">theme</p>
+            <p id="co-name">Co.</p>
+            <p id="tag">Tag</p>
             <img src="" alt="" id="cover" width="300">
         </div>
         <div class="vol-info">
@@ -96,7 +97,16 @@
             $("#event-title").text(event.title);
             $("#location").text(event.location);
             $("#cover").attr("src", event.cover);
-            $("#tag").html(`<strong>Theme:</strong> ${event.tag.toString()}`);
+            $("#co-name").html(`<strong>Organiser:</strong> ${event.owner}`);
+
+
+            let tagStr="";
+            event.tag.forEach(tag=> {
+                tagStr += tagDict[tag];
+                tagStr += ", ";
+            });
+            $("#tag").html(`<strong>Theme:</strong> ${tagStr}`);
+
             $("#date").text(`From ${event.timeStart} to ${event.timeEnd}`);
             $("#description").text(event.description);
             const reqJobSec = document.getElementById("req-job-sec");

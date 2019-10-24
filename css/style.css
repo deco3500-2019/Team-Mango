@@ -183,6 +183,9 @@ nav a:hover {
     flex-wrap: wrap;
 }
 
+.cover-img {
+    filter: brightness(50%);
+}
 
 
 #new-event-form {

@@ -73,6 +73,7 @@
                 const coverDiv = document.createElement("div");
                 const eventCover = document.createElement("img");
                 eventCover.setAttribute("src", event.cover);
+                eventCover.className = "cover-img";
                 coverDiv.append(eventCover);
 
                 const iconDiv = document.createElement("div");
@@ -335,6 +336,11 @@
                 selectedSec,
             );
 
+        });
+
+        $("#popup-window").on("click", ".view-btn", function () {
+            const volID=$(this).attr("data-id");
+            window.open(`volunteer-detail.html?vol=${volID}`,"_blank");
         });
     </script>
 </body>

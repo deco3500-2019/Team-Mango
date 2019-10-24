@@ -1,5 +1,7 @@
 # Team-Mango
-We are team mango
+We are team mango, our project is a platform dedicated to satisfying volunteers to find suitable activities and organizers to find their own volunteers. We believe that every volunteer has its own shining place, and every activity has to participate. People who come in. We are committed to better matching the two, providing a better experience and greater efficiency for volunteer activities.
+
+![Imgur](https://i.imgur.com/f0fi1xr.png)
 
 # Product page
 Click here for [product page](http://wallygood.net/social-prototype/product/)

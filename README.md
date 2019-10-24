@@ -6,7 +6,7 @@ We are team mango, our project is a platform dedicated to satisfying volunteers 
 # Product page
 Click here for [product page](http://wallygood.net/social-prototype/product/)
 
-## Hi-fi Prototype Instructions
+# Hi-fi Prototype Instructions
 **Running Exapmle**
 Click here for the [Running Example](http://wallygood.net/social-prototype/)
 

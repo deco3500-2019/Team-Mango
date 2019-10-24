@@ -25,7 +25,7 @@ const eventData = [{
     },
     {
         location: "Indooroopilly",
-        timesStart: "2019-11-09T14:00",
+        timeStart: "2019-11-09T14:00",
         timeEnd: "2019-11-09T20:00",
         title: "Specialty Coffee Festival",
         cover: "images/john.jpg",

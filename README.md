@@ -109,7 +109,47 @@ For later iteration, we would like to improve our user interface like designing 
 
 # Link to Final Report
 
-Working in progress...
+### Table of contents
+
+[Design Process Overview](https://github.com/deco3500-2019/Team-Mango/wiki/Design-process-overview)
+
+#### Phase 1
+[Proposal](https://github.com/deco3500-2019/Team-Mango/wiki/Proposal)
+
+#### Phase 2
+[User Research](https://github.com/deco3500-2019/Team-Mango/wiki/User-Research)
+
+[Establishment of requirements](https://github.com/deco3500-2019/Team-Mango/wiki/Establishment-of-requirements)
+
+[Low-Fi Prototype Evaluation Protocol](https://github.com/deco3500-2019/Team-Mango/wiki/Low-Fi-Prototype-Evaluation-Protocols)
+
+[Low-Fi Prototype Evaluation Result](https://github.com/deco3500-2019/Team-Mango/wiki/Low-Fi-Prototype-Evaluation-Result)
+
+#### Phase 3
+[Reestablishment of requirements](https://github.com/deco3500-2019/Team-Mango/wiki/Reestablishment-of-requirements)
+
+[Hi-Fi Prototype Instruction](https://github.com/deco3500-2019/Team-Mango/wiki/Hi-Fi-Prototype-Instruction)
+
+[Hi-Fi Prototype Evaluation Protocol](https://github.com/deco3500-2019/Team-Mango/wiki/Hi-FI-Prototype-Evaluation-Protocol)
+
+[Hi-Fi Prototype Evaluation Results](https://github.com/deco3500-2019/Team-Mango/wiki/Hi-Fi-Prototype-Evaluation-Results)
+
+#### Meetings and Stand-Ups
+
+[Stand-up 1](https://github.com/deco3500-2019/Team-Mango/wiki/Stand-up-1-Summary)
+
+[Stand-up 2](https://github.com/deco3500-2019/Team-Mango/wiki/Stand-up-2-Summary)
+
+#### Reflection & Summary
+
+[Reflection](https://github.com/deco3500-2019/Team-Mango/wiki/Project-Reflection)
+
+[Summary](https://github.com/deco3500-2019/Team-Mango/wiki/Project-Summary)
+
+[Project Contribution](https://github.com/deco3500-2019/Team-Mango/wiki/Project-Contribution)
+
+#### Appendix
+[Appendix](https://github.com/deco3500-2019/Team-Mango/wiki/Appendix)
 
 # Project Contributions
 

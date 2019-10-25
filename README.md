@@ -22,6 +22,10 @@ The high-fidelity prototype of this project is a pure front-end simulation websi
 
 4. The signed volunteers and events are created automatically when first initialised using data from js/eventData.js and store into local storage. Users may change the preset event and volunteer information by changing the object in js/eventData.js Users can reset the project by deleting the local storage data.
 
+**3rd Party Plugin:**
+
+[Full Calendar](https://github.com/fullcalendar/fullcalendar) Based on MIT License
+
 # Design process overview
 Our design process was divided into 8 steps including background research, user research, ideation, design low-fidelity prototype, user evaluation based on the low-fidelity prototype, design high-fidelity prototype, user evaluation based on high-fidelity prototype, further improvements (see Fig 1).
 

@@ -156,7 +156,7 @@ Working in progress...
 * Contribute to the Readme.md
 * Contribute to Wiki page
 
-## QS
+## Autumn
 * UX designer
 * Sketching for the prototype
 * Research on the relationship between organization and volunteers
